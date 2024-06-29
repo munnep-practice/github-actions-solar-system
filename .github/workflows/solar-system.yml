@@ -35,3 +35,30 @@ jobs:
           with:
             name: Mocha-Test-Result
             path: test-results.xml
+
+    code-coverage:
+      name: Unit Testing
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS Version
+        uses: actions/setup-node@v3
+        with:
+          node-version: 10
+  
+      - name: Install Dependencies
+        run: npm install
+  
+      - name: Code-coverage
+        run: npm code-coverage
+        # continue-on-error: true # could also have been used but not very pretty
+        
+      - name: Archive Test Result
+        uses: actions/upload-artifact@v3
+        if: always()                     # run this even if the previous step fails
+        with:
+          name: Code-Coverage-Result
+          path: coverage
+          retention-days: 5   
