@@ -102,7 +102,13 @@ jobs:
         - name: Checkout Repository
           uses: actions/checkout@v4
           
-          
+        - name: set environment variable
+          run: |
+            echo "DOCKER_VERSION=$(docker -v)"  >> GITHUB_ENV
+
+        - name: output the environment variable from previons step
+          run: echo $DOCKER_VERSION
+              
         - name: Install kubectl CLI
           uses: azure/setup-kubectl@v3
           with:
@@ -110,6 +116,6 @@ jobs:
         
         - name: verify kubectl
           run: |
-            kubectl version --short -o yaml
+            kubectl version
             echo ---------------------------------------
             kubectl get nodes    
