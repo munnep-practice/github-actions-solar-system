@@ -13,7 +13,6 @@ env:
 jobs:
     unit-testing:
         name: Unit Testing
-        id: unit-testing
         runs-on: ubuntu-latest
         container: # use this image to execute all the steps 
           image: 'node:20'        # this is a pre-build container image 
