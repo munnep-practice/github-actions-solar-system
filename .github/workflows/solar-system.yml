@@ -92,11 +92,11 @@ jobs:
           tags: 'ghcr.io/${{ github.repository_owner }}/solar-system:${{ github.sha }}'
 
     dev-deploy:  
-      name: docker build
+      name: dev-deploy
       permissions: #added
         packages: write #added
       runs-on: ubuntu-latest
-      needs: ["code-coverage","unit-testing"]
+      needs: ["docker-build"]
 
       steps:
         - name: Checkout Repository
