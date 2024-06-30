@@ -60,10 +60,9 @@ jobs:
       - name: Code-coverage
         run: npm run coverage
         continue-on-error: true # can be used but not pretty
+      
 
-        
-
-     docker-build:  
+    docker-build:  
      name: docker build
      runs-on: ubuntu-latest
      
