@@ -29,13 +29,12 @@ jobs:
             path: ~/.npm
             key: '${{ runner.os }}-node-modules-${{ hashFiles(''package-lock.json'') }}'
 
-
         - name: Install Dependencies
           run: npm install
     
         - name: Unit Testing
           run: npm test
-          
+
         - name: Archive Test Result
           uses: actions/upload-artifact@v4
           if: always()                     # run this even if the previous step fails
@@ -61,11 +60,29 @@ jobs:
       - name: Code-coverage
         run: npm run coverage
         continue-on-error: true # can be used but not pretty
+
         
-      - name: Archive Test Result
-        uses: actions/upload-artifact@v4
-        if: always()                     # run this even if the previous step fails
+
+     docker-build:  
+     name: docker build
+     runs-on: ubuntu-latest
+     
+     needs: ["code-coverage","unit-testing"]
+     
+     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          name: Code-Coverage-Result
-          path: coverage
-          retention-days: 5   
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/{githubUsername}/solar-system:{githubSHA} 
