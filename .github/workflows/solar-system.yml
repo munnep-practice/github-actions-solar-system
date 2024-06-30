@@ -24,7 +24,7 @@ jobs:
             node-version: 20
 
         - name: Cache NPM dependencies              # this will cache the files and check if they are needed
-          uses: actions/cache@v3
+          uses: actions/cache@v4
           with:
             path: ~/.npm
             key: '${{ runner.os }}-node-modules-${{ hashFiles(''package-lock.json'') }}'
