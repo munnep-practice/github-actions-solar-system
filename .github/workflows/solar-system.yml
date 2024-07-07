@@ -95,7 +95,7 @@ jobs:
       needs: docker-build
       runs-on: ubuntu-latest
       outputs:
-        url: ${{ steps.output_step.url }}
+        url: ${{ steps.output_step.outputs.url }}
       environment:
         name: development
 
