@@ -94,7 +94,7 @@ jobs:
     dev-deploy:  
       name: dev-deploy
       environment:
-        name: development
+        name: development                     # we have specific environment variables set on repo
       permissions: #added
         packages: write #added
       runs-on: ubuntu-latest
